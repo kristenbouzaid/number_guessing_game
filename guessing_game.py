@@ -66,9 +66,3 @@ def start_game():
     print(f'''Thanks for playing, {player}!''')
     
 start_game()
-
-
-#TODO:
-# - add a README
-
-
