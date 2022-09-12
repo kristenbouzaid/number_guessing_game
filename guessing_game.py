@@ -1,38 +1,74 @@
 """
 Project 1 - Number Guessing Game
 --------------------------------
-
-For this first project you can use Workspaces. 
-
-NOTE: If you prefer to work locally on your own computer, you can totally do that by clicking: File -> Download Workspace in the file menu after you fork the snapshot of this workspace.
-
 """
 
-import random
-
-
 def start_game():
-    """Psuedo-code Hints
     
-    When the program starts, we want to:
-    ------------------------------------
-    1. Display an intro/welcome message to the player.
-    2. Store a random number as the answer/solution.
-    3. Continuously prompt the player for a guess.
-      a. If the guess greater than the solution, display to the player "It's lower".
-      b. If the guess is less than the solution, display to the player "It's higher".
+    import random
     
-    4. Once the guess is correct, stop looping, inform the user they "Got it"
-         and show how many attempts it took them to get the correct number.
-    5. Save their attempt number to a list.
-    6. At the end of the game, show the player, 1) their number of attempts, 2) the mean, median, and mode of the saved attempts list.
-    7. Ask the player if they want to play again.
+    from statistics import median, mode, mean
     
-    ( You can add more features/enhancements if you'd like to. )
-    """
-    # write your code inside this function.
+    number_of_attempts = []
+    high_score = 0
+    
+    player = input(f"\nWelcome to Kristen's **FANTASTIC** Number Guessing Game!\nWhat is your name?   ")
+    
+    print(f"\nHi {player}!\n\nIn this game, you will try to guess a random number between 0 and 100. Let's go!\n")
+    
+    while True:
+        solution = random.randint (0,100)
+        guess_count = 0
+        guess = ""
+            
+        while guess != solution:
+            try:
+                guess = int(input(f"What is your guess?  "))
+            except ValueError:
+                print(f"I'm sorry...we only accept integers. Please try again.")
+                continue
+            if guess > 100 or guess < 0:
+                print(f"Please only enter numbers between 0 and 100.")
+            elif guess < solution:
+                print(f"It's higher. Try again.")
+            elif guess > solution:
+                print (f"It's lower. Try again.")
+            guess_count += 1
+        
+        if guess_count == 1:
+            print(f"\n****You got it! It took you {guess_count} guess.****")
+        else:
+            print(f"\n****You got it! It took you {guess_count} guesses.****")  
+        
+        if high_score == 0:
+            high_score = guess_count
+        elif guess_count < min(number_of_attempts):
+            print(f"-*!*-You've gotten a new high score of {guess_count}!-*!*-")
+        else:
+            print(f"The high score is {high_score}. Better luck next time!")
+        
+        number_of_attempts.append(guess_count)  
+        
+        guess_mean = round(mean(number_of_attempts))
+        guess_median = int(median(number_of_attempts))
+        guess_mode = mode(number_of_attempts)
+        
+        print(f"\nHere are your game statistics: \n   Average number of guesses (Mean): {guess_mean} \n   Mid-range score (Median): {guess_median}")
+        
+        if len(number_of_attempts) != len(set(number_of_attempts)):
+            print(f"   Most common score (Mode): {guess_mode}")
+        else:
+            print(f"   There is no Most Common Answer (Mode).")
+        play_again = input(f"\nDo you want to play again? (y/n)   ")
+        if play_again.lower() == "n":
+            break
 
-
-
-# Kick off the program by calling the start_game function.
+    print(f'''Thanks for playing, {player}!''')
+    
 start_game()
+
+
+#TODO:
+# - add a README
+
+
