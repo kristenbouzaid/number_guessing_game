@@ -43,9 +43,8 @@ def start_game():
         if high_score == 0:
             high_score = guess_count
         elif guess_count < min(number_of_attempts):
-            print(f"-*!*-You've gotten a new high score of {guess_count}!-*!*-")
-        else:
-            print(f"The high score is {high_score}. Better luck next time!")
+            high_score = guess_count
+            print(f"\n-*!*-You've gotten a new high score of {guess_count}!-*!*-")
         
         number_of_attempts.append(guess_count)  
         
@@ -62,6 +61,8 @@ def start_game():
         play_again = input(f"\nDo you want to play again? (y/n)   ")
         if play_again.lower() == "n":
             break
+        else:
+            print(f"\nThe current high score is {high_score}. See if you can beat it!\n")
 
     print(f'''Thanks for playing, {player}!''')
     
